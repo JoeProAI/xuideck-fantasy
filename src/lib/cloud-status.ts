@@ -1,9 +1,11 @@
+import { firebaseWebConfig } from "./firebase-config";
+
 export function firebaseConfigured() {
   return Boolean(
-    import.meta.env.VITE_FIREBASE_API_KEY &&
-      import.meta.env.VITE_FIREBASE_PROJECT_ID &&
-      import.meta.env.VITE_FIREBASE_AUTH_DOMAIN &&
-      import.meta.env.VITE_FIREBASE_APP_ID,
+    firebaseWebConfig.apiKey &&
+      firebaseWebConfig.projectId &&
+      firebaseWebConfig.authDomain &&
+      firebaseWebConfig.appId,
   );
 }
 
@@ -12,5 +14,5 @@ export function convexConfigured() {
 }
 
 export function cloudReady() {
-  return firebaseConfigured() && convexConfigured();
+  return firebaseConfigured();
 }

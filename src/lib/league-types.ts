@@ -15,4 +15,5 @@ export type FantasyLeague = {
   commissionerId: string;
   members: LeagueMember[];
   createdAt: number;
+  cloud?: boolean;
 };
