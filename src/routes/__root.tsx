@@ -6,6 +6,8 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { Toaster } from "sonner";
+import { CloudSync } from "@/components/cloud-sync";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
 import { AuthProvider } from "@/lib/auth/provider";
 import { AppErrorComponent } from "@/lib/error-component";
@@ -64,7 +66,7 @@ export const Route = createRootRoute({
       ...(origin ? [{ rel: "canonical", href: origin }] : []),
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" as const },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Literata:opsz,wght@7..72,400;7..72,600&family=Teko:wght@500;600&display=swap",
@@ -80,8 +82,10 @@ function RootComponent() {
     <RootDocument>
       <AuthProvider>
         <SiteNav />
+        <CloudSync />
         <div className="pb-20 md:pb-0">
           <Outlet />
+          <SiteFooter />
         </div>
         <Toaster theme="dark" position="top-center" />
       </AuthProvider>

@@ -30,6 +30,9 @@ type State = {
   setWeek: (week: number) => void;
   setLeagueName: (name: string) => void;
   setMyName: (name: string) => void;
+  setMeIdentity: (id: string, name: string) => void;
+  addLeague: (league: FantasyLeague) => void;
+  mergeRemoteLeagues: (remote: FantasyLeague[]) => void;
   clearRoster: () => void;
   createLeague: (name: string, teamName: string) => FantasyLeague;
   joinLeague: (code: string, teamName: string) => FantasyLeague;
@@ -56,6 +59,29 @@ export const useLeague = create<State>()(
       setWeek: (week) => set({ week }),
       setLeagueName: (leagueName) => set({ leagueName }),
       setMyName: (name) => set({ me: { ...get().me, name } }),
+      setMeIdentity: (id, name) => set({ me: { id, name } }),
+      addLeague: (league) => {
+        const leagues = get().leagues.filter((l) => l.code !== league.code);
+        set({
+          leagues: [league, ...leagues],
+          activeCode: league.code,
+          leagueName: league.name,
+        });
+      },
+      mergeRemoteLeagues: (remote) => {
+        const localOnly = get().leagues.filter((l) => !l.cloud);
+        const byCode = new Map(remote.map((l) => [l.code, l]));
+        for (const l of get().leagues) {
+          if (l.cloud && !byCode.has(l.code)) byCode.set(l.code, l);
+        }
+        const next = [...byCode.values(), ...localOnly];
+        const active = get().activeCode;
+        const still = active && next.some((l) => l.code === active);
+        set({
+          leagues: next,
+          activeCode: still ? active : next[0]?.code ?? null,
+        });
+      },
       setActiveCode: (activeCode) => set({ activeCode }),
       clearRoster: () => {
         const { activeCode, leagues, me } = get();

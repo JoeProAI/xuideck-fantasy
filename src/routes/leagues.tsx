@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { toast } from "sonner";
 import { AuthPanel } from "@/components/auth-panel";
 import { SetupCloud } from "@/components/setup-cloud";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { createCloudLeague, joinCloudLeague } from "@/lib/cloud-leagues";
+import { getFirebaseAuth } from "@/lib/firebase";
 import { useLeague } from "@/lib/store";
-import { toast } from "sonner";
 
 export const Route = createFileRoute("/leagues")({
   component: LeaguesPage,
@@ -25,6 +27,7 @@ function LeaguesPage() {
   const activeCode = useLeague((s) => s.activeCode);
   const createLeague = useLeague((s) => s.createLeague);
   const joinLeague = useLeague((s) => s.joinLeague);
+  const addLeague = useLeague((s) => s.addLeague);
   const setActive = useLeague((s) => s.setActiveCode);
   const me = useLeague((s) => s.me);
   const setMyName = useLeague((s) => s.setMyName);
@@ -32,22 +35,47 @@ function LeaguesPage() {
   const [name, setName] = useState("");
   const [team, setTeam] = useState("");
   const [code, setCode] = useState("");
+  const [pending, setPending] = useState(false);
 
-  function onCreate(e: React.FormEvent) {
+  async function onCreate(e: React.FormEvent) {
     e.preventDefault();
-    const league = createLeague(name, team);
-    toast.success(`League up. Code ${league.code}`);
-    setName("");
+    setPending(true);
+    try {
+      const uid = getFirebaseAuth()?.currentUser?.uid;
+      if (uid) {
+        const league = await createCloudLeague(uid, name, team);
+        addLeague(league);
+        toast.success(`League up. Code ${league.code}. Send that to friends.`);
+      } else {
+        const league = createLeague(name, team);
+        toast.success(`League up. Code ${league.code}. Sign in to share it across phones.`);
+      }
+      setName("");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Could not create.");
+    } finally {
+      setPending(false);
+    }
   }
 
-  function onJoin(e: React.FormEvent) {
+  async function onJoin(e: React.FormEvent) {
     e.preventDefault();
+    setPending(true);
     try {
-      const league = joinLeague(code, team);
-      toast.success(`Joined ${league.name}`);
+      const uid = getFirebaseAuth()?.currentUser?.uid;
+      if (uid) {
+        const league = await joinCloudLeague(uid, code, team);
+        addLeague(league);
+        toast.success(`Joined ${league.name}`);
+      } else {
+        const league = joinLeague(code, team);
+        toast.success(`Joined ${league.name}`);
+      }
       setCode("");
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Could not join.");
+    } finally {
+      setPending(false);
     }
   }
 
@@ -62,7 +90,9 @@ function LeaguesPage() {
         every week.
       </p>
 
-      <AuthPanel />
+      <div className="mt-6">
+        <AuthPanel />
+      </div>
 
       <label className="mt-6 block font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
         Your name
@@ -89,7 +119,7 @@ function LeaguesPage() {
             value={team}
             onChange={(e) => setTeam(e.target.value)}
           />
-          <Button type="submit" className="mt-3 w-full">
+          <Button type="submit" className="mt-3 w-full" disabled={pending}>
             Create league
           </Button>
         </form>
@@ -108,7 +138,7 @@ function LeaguesPage() {
             value={team}
             onChange={(e) => setTeam(e.target.value)}
           />
-          <Button type="submit" variant="outline" className="mt-3 w-full">
+          <Button type="submit" variant="outline" className="mt-3 w-full" disabled={pending}>
             Join with code
           </Button>
         </form>
@@ -125,6 +155,7 @@ function LeaguesPage() {
                 <p className="font-medium">{l.name}</p>
                 <p className="font-mono text-xs text-muted">
                   {l.code} · {l.members.length} team{l.members.length === 1 ? "" : "s"}
+                  {l.cloud ? " · live" : " · this device"}
                 </p>
               </div>
               <div className="flex gap-2">
