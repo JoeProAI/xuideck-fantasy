@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { LineupRow } from "@/components/lineup-row";
+import { LaunchPost } from "@/components/launch-post";
 import { ScoreGate } from "@/components/score-gate";
 import { WeekBar } from "@/components/week-bar";
 import { Button } from "@/components/ui/button";
@@ -77,6 +78,7 @@ function MatchupPage() {
       <p className="mt-4 text-sm text-muted">
         Week {week}. Five starters. Highest handicapped score wins.
       </p>
+      <LaunchPost />
     </main>
   );
 }

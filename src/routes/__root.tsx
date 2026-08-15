@@ -16,12 +16,13 @@ import {
   APP_NAME,
   APP_TAGLINE,
   jsonLd,
+  ogImageUrl,
   publicOrigin,
 } from "@/lib/seo";
 import appCss from "@/styles.css?url";
 
 const origin = publicOrigin();
-const ogImage = origin ? `${origin}/og.jpg` : undefined;
+const ogImage = origin ? ogImageUrl(origin) : undefined;
 
 export const Route = createRootRoute({
   head: () => ({
@@ -43,6 +44,7 @@ export const Route = createRootRoute({
       { name: "twitter:title", content: `${APP_NAME} | ${APP_TAGLINE}` },
       { name: "twitter:description", content: APP_DESCRIPTION },
       { name: "twitter:creator", content: "@JoePro" },
+      { name: "twitter:site", content: "@JoePro" },
       { property: "og:type", content: "x:game" },
       { property: "og:site_name", content: APP_NAME },
       { property: "og:title", content: `${APP_NAME} | ${APP_TAGLINE}` },
@@ -54,9 +56,10 @@ export const Route = createRootRoute({
             { property: "og:image", content: ogImage },
             { property: "og:image:width", content: "1200" },
             { property: "og:image:height", content: "630" },
-            { property: "og:image:alt", content: "Xuideck Fantasy scoreboard" },
+            { property: "og:image:alt", content: "Draft any X account. Likes are runs. 100k posts are home runs." },
+            { property: "og:image:type", content: "image/jpeg" },
             { name: "twitter:image", content: ogImage },
-            { name: "twitter:image:alt", content: "Xuideck Fantasy scoreboard" },
+            { name: "twitter:image:alt", content: "Draft any X account. Likes are runs. 100k posts are home runs." },
           ]
         : []),
     ],

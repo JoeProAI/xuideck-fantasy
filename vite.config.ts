@@ -10,7 +10,7 @@ export default defineConfig(({ command }) => ({
   plugins: [
     tailwindcss(),
     tanstackStart(),
-    ...(command === "build" ? [nitro({ preset: "vercel" })] : []),
+    ...(command === "build" ? [nitro({ preset: "vercel", serverDir: "./server" })] : []),
     viteReact(),
   ],
 }));
