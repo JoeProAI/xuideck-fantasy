@@ -50,9 +50,9 @@ export const useLeague = create<State>()(
   persist(
     (set, get) => ({
       week: CURRENT_WEEK,
-      roster: ["JoePro", "XOpenSource", "aakashgupta", "AlexFinn", "plbiojout"],
+      roster: [],
       custom: [],
-      leagueName: "East River",
+      leagueName: "My team",
       me: { id: "mgr-" + nid(), name: "You" },
       leagues: [],
       activeCode: null,
@@ -236,7 +236,7 @@ export const useLeague = create<State>()(
         });
       },
     }),
-    { name: "xuideck-fantasy-v3" },
+    { name: "xuideck-fantasy-v4" },
   ),
 );
 

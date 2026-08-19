@@ -3,7 +3,7 @@ import { Search, Swords, Trophy, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { to: "/", label: "Matchup", icon: Swords },
+  { to: "/matchup", label: "Matchup", icon: Swords },
   { to: "/team", label: "My Team", icon: Users },
   { to: "/players", label: "Players", icon: Search },
   { to: "/leagues", label: "Leagues", icon: Trophy },

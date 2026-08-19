@@ -14,6 +14,7 @@ import { Route as BoardRouteImport } from './routes/board'
 import { Route as DraftRouteImport } from './routes/draft'
 import { Route as LeagueRouteImport } from './routes/league'
 import { Route as LeaguesRouteImport } from './routes/leagues'
+import { Route as MatchupRouteImport } from './routes/matchup'
 import { Route as PlayersRouteImport } from './routes/players'
 import { Route as RulesRouteImport } from './routes/rules'
 import { Route as StandingsRouteImport } from './routes/standings'
@@ -44,6 +45,11 @@ const LeagueRoute = LeagueRouteImport.update({
 const LeaguesRoute = LeaguesRouteImport.update({
   id: '/leagues',
   path: '/leagues',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MatchupRoute = MatchupRouteImport.update({
+  id: '/matchup',
+  path: '/matchup',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PlayersRoute = PlayersRouteImport.update({
@@ -83,6 +89,7 @@ export interface FileRoutesByFullPath {
   '/draft': typeof DraftRoute
   '/league': typeof LeagueRoute
   '/leagues': typeof LeaguesRouteWithChildren
+  '/matchup': typeof MatchupRoute
   '/players': typeof PlayersRoute
   '/rules': typeof RulesRoute
   '/standings': typeof StandingsRoute
@@ -96,6 +103,7 @@ export interface FileRoutesByTo {
   '/draft': typeof DraftRoute
   '/league': typeof LeagueRoute
   '/leagues': typeof LeaguesRouteWithChildren
+  '/matchup': typeof MatchupRoute
   '/players': typeof PlayersRoute
   '/rules': typeof RulesRoute
   '/standings': typeof StandingsRoute
@@ -110,6 +118,7 @@ export interface FileRoutesById {
   '/draft': typeof DraftRoute
   '/league': typeof LeagueRoute
   '/leagues': typeof LeaguesRouteWithChildren
+  '/matchup': typeof MatchupRoute
   '/players': typeof PlayersRoute
   '/rules': typeof RulesRoute
   '/standings': typeof StandingsRoute
@@ -125,6 +134,7 @@ export interface FileRouteTypes {
     | '/draft'
     | '/league'
     | '/leagues'
+    | '/matchup'
     | '/players'
     | '/rules'
     | '/standings'
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/draft'
     | '/league'
     | '/leagues'
+    | '/matchup'
     | '/players'
     | '/rules'
     | '/standings'
@@ -151,6 +162,7 @@ export interface FileRouteTypes {
     | '/draft'
     | '/league'
     | '/leagues'
+    | '/matchup'
     | '/players'
     | '/rules'
     | '/standings'
@@ -165,6 +177,7 @@ export interface RootRouteChildren {
   DraftRoute: typeof DraftRoute
   LeagueRoute: typeof LeagueRoute
   LeaguesRoute: typeof LeaguesRouteWithChildren
+  MatchupRoute: typeof MatchupRoute
   PlayersRoute: typeof PlayersRoute
   RulesRoute: typeof RulesRoute
   StandingsRoute: typeof StandingsRoute
@@ -207,6 +220,13 @@ declare module '@tanstack/react-router' {
       path: '/leagues'
       fullPath: '/leagues'
       preLoaderRoute: typeof LeaguesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/matchup': {
+      id: '/matchup'
+      path: '/matchup'
+      fullPath: '/matchup'
+      preLoaderRoute: typeof MatchupRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/players': {
@@ -271,6 +291,7 @@ const rootRouteChildren: RootRouteChildren = {
   DraftRoute: DraftRoute,
   LeagueRoute: LeagueRoute,
   LeaguesRoute: LeaguesRouteWithChildren,
+  MatchupRoute: MatchupRoute,
   PlayersRoute: PlayersRoute,
   RulesRoute: RulesRoute,
   StandingsRoute: StandingsRoute,

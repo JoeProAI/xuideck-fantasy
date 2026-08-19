@@ -23,7 +23,7 @@ function RulesPage() {
       <ol className="mt-6 list-decimal space-y-3 pl-5 text-muted">
         <li>Set five starters.</li>
         <li>Add any public X handle from Players.</li>
-        <li>Highest handicapped score beats Desk Seven.</li>
+        <li>Highest handicapped score wins the week.</li>
       </ol>
       <h2 className="mt-10 text-3xl">Scoring</h2>
       <table className="mt-4 w-full text-sm">

@@ -1,5 +1,9 @@
 import type { Player } from "./types";
 
+/**
+ * Live public X accounts + their real profile photos (cached locally).
+ * Weekly box scores are modeled for Week 32 to 33 around the Aug 13 algo drop.
+ */
 export const PLAYERS: Player[] = [
   {
     handle: "elonmusk",
@@ -188,5 +192,17 @@ export const PLAYERS: Player[] = [
 export function playerByHandle(handle: string) {
   return PLAYERS.find((p) => p.handle.toLowerCase() === handle.toLowerCase());
 }
+
+/** Faces on the home rail — no box scores, just who you can draft. */
+export const FEATURED_HANDLES = [
+  "elonmusk",
+  "grok",
+  "nikitabier",
+  "cb_doge",
+  "Engineering",
+  "AlexFinn",
+  "XOpenSource",
+  "aakashgupta",
+];
 
 export const DESK_SEVEN = ["cb_doge", "nikitabier", "Engineering", "tetsuoai", "orbitant"];
