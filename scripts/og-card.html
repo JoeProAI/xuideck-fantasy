@@ -69,12 +69,12 @@
       }
       h1 {
         position: absolute;
-        top: 78px;
-        left: 56px;
-        right: 56px;
+        top: 84px;
+        left: 64px;
+        right: 64px;
         margin: 0;
         text-align: center;
-        font-size: 92px;
+        font-size: 96px;
         line-height: 0.82;
         letter-spacing: 0.03em;
         text-transform: uppercase;
@@ -84,48 +84,49 @@
         display: block;
         font-style: normal;
         color: #d6ff2f;
-        font-size: 78px;
+        font-size: 82px;
         letter-spacing: 0.08em;
       }
       .lineup {
         position: absolute;
         left: 48px;
         right: 48px;
-        top: 268px;
+        top: 278px;
         display: flex;
         justify-content: space-between;
         gap: 14px;
       }
-      .player {
+      .stat {
         flex: 1;
         background: #efe6cf;
         color: #14120c;
-        overflow: hidden;
         border: 2px solid #d6ff2f;
+        padding: 16px 12px 18px;
+        min-height: 214px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
       }
-      .player img {
-        display: block;
-        width: 100%;
-        height: 168px;
-        object-fit: cover;
-        object-position: center 18%;
-        background: #1c1f14;
+      .stat .abbr {
+        font-size: 92px;
+        line-height: 0.78;
+        letter-spacing: 0.02em;
+        font-weight: 600;
       }
-      .player .meta {
-        padding: 8px 8px 10px;
+      .stat .map {
+        margin-top: auto;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #6d6b5e;
       }
-      .player .name {
+      .stat .base {
+        margin-top: 4px;
         font-size: 28px;
         line-height: 0.85;
-        letter-spacing: 0.04em;
+        letter-spacing: 0.06em;
         text-transform: uppercase;
-      }
-      .player .handle {
-        margin-top: 4px;
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 12px;
-        letter-spacing: 0.04em;
-        color: #6d6b5e;
       }
       .tag {
         position: absolute;
@@ -156,40 +157,30 @@
       </div>
       <h1>Draft any<em>account on X</em></h1>
       <div class="lineup">
-        <div class="player">
-          <img src="../public/players/elonmusk.jpg" alt="" />
-          <div class="meta">
-            <div class="name">Elon</div>
-            <div class="handle">@elonmusk</div>
-          </div>
+        <div class="stat">
+          <div class="abbr">R</div>
+          <div class="map">Likes</div>
+          <div class="base">Runs</div>
         </div>
-        <div class="player">
-          <img src="../public/players/grok.jpg" alt="" />
-          <div class="meta">
-            <div class="name">Grok</div>
-            <div class="handle">@grok</div>
-          </div>
+        <div class="stat">
+          <div class="abbr">H</div>
+          <div class="map">Impressions / 1k</div>
+          <div class="base">Hits</div>
         </div>
-        <div class="player">
-          <img src="../public/players/nikitabier.jpg" alt="" />
-          <div class="meta">
-            <div class="name">Nikita</div>
-            <div class="handle">@nikitabier</div>
-          </div>
+        <div class="stat">
+          <div class="abbr">HR</div>
+          <div class="map">Posts over 100k</div>
+          <div class="base">Homers</div>
         </div>
-        <div class="player">
-          <img src="../public/players/cb_doge.jpg" alt="" />
-          <div class="meta">
-            <div class="name">Doge</div>
-            <div class="handle">@cb_doge</div>
-          </div>
+        <div class="stat">
+          <div class="abbr">RBI</div>
+          <div class="map">Replies + quotes</div>
+          <div class="base">RBI</div>
         </div>
-        <div class="player">
-          <img src="../public/players/XOpenSource.jpg" alt="" />
-          <div class="meta">
-            <div class="name">Open Src</div>
-            <div class="handle">@XOpenSource</div>
-          </div>
+        <div class="stat">
+          <div class="abbr">SB</div>
+          <div class="map">Bookmarks</div>
+          <div class="base">Steals</div>
         </div>
       </div>
       <p class="tag">
