@@ -24,7 +24,6 @@
           radial-gradient(ellipse at 50% 0%, #2a3314 0%, #0c0d0a 58%),
           #0c0d0a;
         color: #f3f0e4;
-        font-family: Teko, "Arial Narrow", sans-serif;
       }
       .card::before {
         content: "";
@@ -50,100 +49,111 @@
       .rule.bot {
         bottom: 28px;
       }
-      .topbar {
+      .sheet {
         position: absolute;
-        top: 42px;
         left: 56px;
         right: 56px;
-        display: flex;
-        justify-content: space-between;
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 15px;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: #9a9788;
-      }
-      .topbar b {
-        color: #d6ff2f;
-        font-weight: 600;
-      }
-      h1 {
-        position: absolute;
-        top: 84px;
-        left: 64px;
-        right: 64px;
-        margin: 0;
-        text-align: center;
-        font-size: 96px;
-        line-height: 0.82;
-        letter-spacing: 0.03em;
-        text-transform: uppercase;
-        font-weight: 600;
-      }
-      h1 em {
-        display: block;
-        font-style: normal;
-        color: #d6ff2f;
-        font-size: 82px;
-        letter-spacing: 0.08em;
-      }
-      .lineup {
-        position: absolute;
-        left: 48px;
-        right: 48px;
-        top: 278px;
-        display: flex;
-        justify-content: space-between;
-        gap: 14px;
-      }
-      .stat {
-        flex: 1;
+        top: 48px;
+        bottom: 48px;
         background: #efe6cf;
         color: #14120c;
         border: 2px solid #d6ff2f;
-        padding: 16px 12px 18px;
-        min-height: 214px;
         box-sizing: border-box;
+        padding: 28px 40px 24px;
         display: flex;
         flex-direction: column;
       }
-      .stat .abbr {
-        font-size: 92px;
-        line-height: 0.78;
-        letter-spacing: 0.02em;
-        font-weight: 600;
-      }
-      .stat .map {
-        margin-top: auto;
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 13px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: #6d6b5e;
-      }
-      .stat .base {
-        margin-top: 4px;
-        font-size: 28px;
-        line-height: 0.85;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-      }
-      .tag {
-        position: absolute;
-        left: 56px;
-        right: 56px;
-        bottom: 42px;
+      .kicker {
         display: flex;
         justify-content: space-between;
         align-items: baseline;
         font-family: "IBM Plex Mono", monospace;
-        font-size: 16px;
-        letter-spacing: 0.12em;
+        font-size: 14px;
+        letter-spacing: 0.22em;
         text-transform: uppercase;
-        color: #c8c4b4;
+        color: #6d6b5e;
       }
-      .tag strong {
-        color: #d6ff2f;
+      .kicker b {
+        color: #14120c;
+        font-weight: 600;
+      }
+      h1 {
+        margin: 10px 0 0;
+        font-family: Teko, "Arial Narrow", sans-serif;
+        font-size: 72px;
+        line-height: 0.82;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+      h1 em {
+        font-style: normal;
+      }
+      table {
+        width: 100%;
+        margin-top: 18px;
+        border-collapse: collapse;
+        flex: 1;
+      }
+      th {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #6d6b5e;
+        font-weight: 500;
+        text-align: left;
+        padding: 0 0 8px;
+        border-bottom: 2px solid #14120c;
+      }
+      th.pts,
+      td.pts {
+        text-align: right;
+      }
+      td {
+        border-bottom: 1px solid rgb(20 18 12 / 0.16);
+        padding: 4px 0 2px;
+        vertical-align: end;
+      }
+      tr:last-child td {
+        border-bottom: 0;
+      }
+      .abbr {
+        font-family: Teko, "Arial Narrow", sans-serif;
+        font-size: 64px;
+        line-height: 0.82;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        width: 140px;
+      }
+      .map {
+        font-family: Teko, "Arial Narrow", sans-serif;
+        font-size: 42px;
+        line-height: 0.9;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+      }
+      .pts {
+        font-family: Teko, "Arial Narrow", sans-serif;
+        font-size: 64px;
+        line-height: 0.82;
+        font-weight: 600;
+      }
+      .foot {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 2px solid #d6ff2f;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 15px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #6d6b5e;
+      }
+      .foot strong {
+        color: #14120c;
         font-weight: 600;
       }
     </style>
@@ -151,43 +161,53 @@
   <body>
     <div class="card">
       <div class="rule top"></div>
-      <div class="topbar">
-        <span>Weekly fantasy. The players are X accounts.</span>
-        <span><b>XUIDECK</b> · Week 33</span>
+      <div class="sheet">
+        <div class="kicker">
+          <span><b>XUIDECK</b> Fantasy</span>
+          <span>Week 33 · Start five</span>
+        </div>
+        <h1>Scoring<em>.</em></h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Stat</th>
+              <th>Counts as</th>
+              <th class="pts">Pts</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="abbr">R</td>
+              <td class="map">Likes</td>
+              <td class="pts">1</td>
+            </tr>
+            <tr>
+              <td class="abbr">H</td>
+              <td class="map">Impressions / 1k</td>
+              <td class="pts">1</td>
+            </tr>
+            <tr>
+              <td class="abbr">HR</td>
+              <td class="map">Posts over 100k</td>
+              <td class="pts">10</td>
+            </tr>
+            <tr>
+              <td class="abbr">RBI</td>
+              <td class="map">Replies + quotes</td>
+              <td class="pts">2</td>
+            </tr>
+            <tr>
+              <td class="abbr">SB</td>
+              <td class="map">Bookmarks</td>
+              <td class="pts">3</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="foot">
+          <span>Draft any account on X</span>
+          <span><strong>Then a log handicap</strong></span>
+        </p>
       </div>
-      <h1>Draft any<em>account on X</em></h1>
-      <div class="lineup">
-        <div class="stat">
-          <div class="abbr">R</div>
-          <div class="map">Likes</div>
-          <div class="base">Runs</div>
-        </div>
-        <div class="stat">
-          <div class="abbr">H</div>
-          <div class="map">Impressions / 1k</div>
-          <div class="base">Hits</div>
-        </div>
-        <div class="stat">
-          <div class="abbr">HR</div>
-          <div class="map">Posts over 100k</div>
-          <div class="base">Homers</div>
-        </div>
-        <div class="stat">
-          <div class="abbr">RBI</div>
-          <div class="map">Replies + quotes</div>
-          <div class="base">RBI</div>
-        </div>
-        <div class="stat">
-          <div class="abbr">SB</div>
-          <div class="map">Bookmarks</div>
-          <div class="base">Steals</div>
-        </div>
-      </div>
-      <p class="tag">
-        <span><strong>Likes</strong> are runs</span>
-        <span><strong>100k</strong> posts are home runs</span>
-        <span>Start five. Win the week.</span>
-      </p>
       <div class="rule bot"></div>
     </div>
   </body>
