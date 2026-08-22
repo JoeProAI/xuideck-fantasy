@@ -21,9 +21,10 @@
         width: 1200px;
         height: 630px;
         background:
-          radial-gradient(ellipse at 50% 0%, #2a3314 0%, #0c0d0a 58%),
+          radial-gradient(ellipse at 50% 18%, #32400f 0%, #0c0d0a 62%),
           #0c0d0a;
         color: #f3f0e4;
+        font-family: Teko, "Arial Narrow", sans-serif;
       }
       .card::before {
         content: "";
@@ -32,7 +33,7 @@
         background: repeating-linear-gradient(
           180deg,
           transparent 0 47px,
-          rgb(214 255 47 / 0.04) 47px 48px
+          rgb(214 255 47 / 0.045) 47px 48px
         );
         pointer-events: none;
       }
@@ -49,111 +50,145 @@
       .rule.bot {
         bottom: 28px;
       }
-      .sheet {
+      .topbar {
+        position: absolute;
+        top: 42px;
+        left: 56px;
+        right: 56px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 15px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: #9a9788;
+      }
+      .live {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: #d6ff2f;
+        color: #111408;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        padding: 6px 12px 5px;
+      }
+      .live i {
+        width: 8px;
+        height: 8px;
+        background: #111408;
+        border-radius: 50%;
+        display: block;
+      }
+      .gate {
         position: absolute;
         left: 56px;
         right: 56px;
-        top: 48px;
-        bottom: 48px;
+        top: 96px;
+        display: grid;
+        grid-template-columns: 1fr 96px 1fr;
+        align-items: center;
+        gap: 16px;
+      }
+      .side .who {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 13px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #9a9788;
+      }
+      .side .n {
+        margin-top: 2px;
+        font-size: 168px;
+        line-height: 0.76;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+      }
+      .side.you .n {
+        color: #d6ff2f;
+      }
+      .side.them {
+        text-align: right;
+      }
+      .side .sub {
+        margin-top: 4px;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 14px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #c8c4b4;
+      }
+      .side.you .sub {
+        color: #d6ff2f;
+      }
+      .vs {
+        width: 96px;
+        height: 96px;
+        background: #d6ff2f;
+        color: #111408;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 42px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        box-shadow: 0 0 0 3px #111408, 0 0 40px rgb(214 255 47 / 0.35);
+      }
+      .slots {
+        position: absolute;
+        left: 56px;
+        right: 56px;
+        top: 360px;
+        display: flex;
+        gap: 14px;
+      }
+      .slot {
+        flex: 1;
         background: #efe6cf;
         color: #14120c;
         border: 2px solid #d6ff2f;
+        height: 168px;
         box-sizing: border-box;
-        padding: 28px 40px 24px;
+        padding: 12px 12px 14px;
         display: flex;
         flex-direction: column;
       }
-      .kicker {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
+      .slot .num {
+        font-size: 56px;
+        line-height: 0.78;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+      }
+      .slot .at {
+        margin-top: auto;
         font-family: "IBM Plex Mono", monospace;
-        font-size: 14px;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
+        font-size: 18px;
+        letter-spacing: 0.08em;
         color: #6d6b5e;
       }
-      .kicker b {
-        color: #14120c;
-        font-weight: 600;
-      }
-      h1 {
-        margin: 10px 0 0;
-        font-family: Teko, "Arial Narrow", sans-serif;
-        font-size: 72px;
-        line-height: 0.82;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        font-weight: 600;
-      }
-      h1 em {
-        font-style: normal;
-      }
-      table {
-        width: 100%;
-        margin-top: 18px;
-        border-collapse: collapse;
-        flex: 1;
-      }
-      th {
+      .slot .open {
         font-family: "IBM Plex Mono", monospace;
         font-size: 12px;
         letter-spacing: 0.18em;
         text-transform: uppercase;
-        color: #6d6b5e;
-        font-weight: 500;
-        text-align: left;
-        padding: 0 0 8px;
-        border-bottom: 2px solid #14120c;
+        color: #14120c;
       }
-      th.pts,
-      td.pts {
-        text-align: right;
-      }
-      td {
-        border-bottom: 1px solid rgb(20 18 12 / 0.16);
-        padding: 4px 0 2px;
-        vertical-align: end;
-      }
-      tr:last-child td {
-        border-bottom: 0;
-      }
-      .abbr {
-        font-family: Teko, "Arial Narrow", sans-serif;
-        font-size: 64px;
-        line-height: 0.82;
-        font-weight: 600;
-        letter-spacing: 0.02em;
-        width: 140px;
-      }
-      .map {
-        font-family: Teko, "Arial Narrow", sans-serif;
-        font-size: 42px;
-        line-height: 0.9;
-        letter-spacing: 0.03em;
-        text-transform: uppercase;
-      }
-      .pts {
-        font-family: Teko, "Arial Narrow", sans-serif;
-        font-size: 64px;
-        line-height: 0.82;
-        font-weight: 600;
-      }
-      .foot {
+      .tag {
+        position: absolute;
+        left: 56px;
+        right: 56px;
+        bottom: 42px;
         display: flex;
         justify-content: space-between;
-        align-items: baseline;
-        margin-top: 12px;
-        padding-top: 12px;
-        border-top: 2px solid #d6ff2f;
         font-family: "IBM Plex Mono", monospace;
-        font-size: 15px;
-        letter-spacing: 0.14em;
+        font-size: 16px;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
-        color: #6d6b5e;
+        color: #c8c4b4;
       }
-      .foot strong {
-        color: #14120c;
+      .tag strong {
+        color: #d6ff2f;
         font-weight: 600;
       }
     </style>
@@ -161,53 +196,35 @@
   <body>
     <div class="card">
       <div class="rule top"></div>
-      <div class="sheet">
-        <div class="kicker">
-          <span><b>XUIDECK</b> Fantasy</span>
-          <span>Week 33 · Start five</span>
-        </div>
-        <h1>Scoring<em>.</em></h1>
-        <table>
-          <thead>
-            <tr>
-              <th>Stat</th>
-              <th>Counts as</th>
-              <th class="pts">Pts</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="abbr">R</td>
-              <td class="map">Likes</td>
-              <td class="pts">1</td>
-            </tr>
-            <tr>
-              <td class="abbr">H</td>
-              <td class="map">Impressions / 1k</td>
-              <td class="pts">1</td>
-            </tr>
-            <tr>
-              <td class="abbr">HR</td>
-              <td class="map">Posts over 100k</td>
-              <td class="pts">10</td>
-            </tr>
-            <tr>
-              <td class="abbr">RBI</td>
-              <td class="map">Replies + quotes</td>
-              <td class="pts">2</td>
-            </tr>
-            <tr>
-              <td class="abbr">SB</td>
-              <td class="map">Bookmarks</td>
-              <td class="pts">3</td>
-            </tr>
-          </tbody>
-        </table>
-        <p class="foot">
-          <span>Draft any account on X</span>
-          <span><strong>Then a log handicap</strong></span>
-        </p>
+      <div class="topbar">
+        <span class="live"><i></i>Live</span>
+        <span>XUIDECK FANTASY · Week 33</span>
       </div>
+      <div class="gate">
+        <div class="side you">
+          <div class="who">A 6k account</div>
+          <div class="n">6k</div>
+          <div class="sub">Winning</div>
+        </div>
+        <div class="vs">VS</div>
+        <div class="side them">
+          <div class="who">20 million followers</div>
+          <div class="n">20M</div>
+          <div class="sub">The field</div>
+        </div>
+      </div>
+      <div class="slots">
+        <div class="slot"><div class="num">01</div><div class="at">@</div><div class="open">Open</div></div>
+        <div class="slot"><div class="num">02</div><div class="at">@</div><div class="open">Open</div></div>
+        <div class="slot"><div class="num">03</div><div class="at">@</div><div class="open">Open</div></div>
+        <div class="slot"><div class="num">04</div><div class="at">@</div><div class="open">Open</div></div>
+        <div class="slot"><div class="num">05</div><div class="at">@</div><div class="open">Open</div></div>
+      </div>
+      <p class="tag">
+        <span><strong>Likes</strong> are runs</span>
+        <span><strong>100k</strong> posts are home runs</span>
+        <span>Start five. Draft anyone.</span>
+      </p>
       <div class="rule bot"></div>
     </div>
   </body>
