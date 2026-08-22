@@ -20,7 +20,11 @@ function mulberry32(seed: number) {
   };
 }
 
-/** Deterministic weekly box score from public account size. Same handle+week always matches. */
+/**
+ * Deterministic weekly box score from public account size.
+ * Volume scales with log(followers) so a hot 10k week can beat a sleepy whale.
+ * Same handle+week always matches.
+ */
 export function modelWeekStats(
   handle: string,
   followers: number,
@@ -28,15 +32,20 @@ export function modelWeekStats(
 ): WeekStats {
   const rng = mulberry32(hash32(`${handle.toLowerCase()}:${week}`));
   const size = Math.max(followers, 20);
-  const posts = 3 + Math.floor(rng() * 16);
-  const likeRate = (0.0012 + rng() * 0.006) * (1 + rng() * 0.8);
-  const likes = Math.max(4, Math.round(size * likeRate * (0.35 + rng() * 0.9) * (posts / 8)));
-  const er = 0.004 + rng() * 0.03;
-  const impressions = Math.max(likes * 12, Math.round(likes / er));
+  const reach = Math.pow(Math.log10(size + 100), 3.15) * 22;
+  const posts = 4 + Math.floor(rng() * 14);
+  let heat = 0.28 + rng() * 1.05;
+  if (rng() < 0.14) heat *= 2.4;
+  const likes = Math.max(6, Math.round(reach * heat * (0.65 + posts / 16)));
+  const er = 0.007 + rng() * 0.03;
+  const impressions = Math.max(likes * 14, Math.round(likes / er));
   const replies = Math.round(likes * (0.04 + rng() * 0.12));
   const quotes = Math.round(likes * (0.008 + rng() * 0.03));
   const bookmarks = Math.round(likes * (0.02 + rng() * 0.08));
-  const homeRuns = impressions >= 100_000 ? Math.max(1, Math.round(impressions / 900_000)) : 0;
+  const homeRuns =
+    impressions >= 100_000
+      ? Math.min(6, Math.max(0, Math.round((impressions - 90_000) / 1_400_000)))
+      : 0;
   return { posts, likes, impressions, replies, quotes, bookmarks, homeRuns };
 }
 

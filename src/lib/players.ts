@@ -1,10 +1,13 @@
-import type { Player } from "./types";
+import type { Lane, Player } from "./types";
+import { modelWeekStats } from "./model-week";
+import { CURRENT_WEEK } from "./scoring";
 
 /**
- * Live public X accounts + their real profile photos (cached locally).
- * Weekly box scores are modeled for Week 32 to 33 around the Aug 13 algo drop.
+ * Live public X accounts + their real profile photos.
+ * The first block is hand-tuned around the Aug 13 algo drop.
+ * Everyone else gets a deterministic modeled week from public follower size.
  */
-export const PLAYERS: Player[] = [
+export const CORE: Player[] = [
   {
     handle: "elonmusk",
     name: "Elon Musk",
@@ -189,6 +192,114 @@ export const PLAYERS: Player[] = [
   },
 ];
 
+function seed(
+  handle: string,
+  name: string,
+  bio: string,
+  followers: number,
+  lane: Lane,
+  pfp: string,
+): Player {
+  return {
+    handle,
+    name,
+    bio,
+    followers,
+    verified: true,
+    lane,
+    pfp,
+    weeks: {
+      [CURRENT_WEEK - 1]: modelWeekStats(handle, followers, CURRENT_WEEK - 1),
+      [CURRENT_WEEK]: modelWeekStats(handle, followers, CURRENT_WEEK),
+    },
+  };
+}
+
+const MORE: Player[] = [
+  seed("sama", "Sam Altman", "AI is cool i guess", 5_971_803, "Founder", "https://pbs.twimg.com/profile_images/2046764873200394240/r7BxVezs.jpg"),
+  seed("karpathy", "Andrej Karpathy", "deep learning", 3_923_464, "Engineer", "https://pbs.twimg.com/profile_images/1296667294148382721/9Pr6XrPB.jpg"),
+  seed("pmarca", "Marc Andreessen", "a16z", 5_929_111, "Founder", "https://pbs.twimg.com/profile_images/1820716712234303489/9GpKDZjq.jpg"),
+  seed("paulg", "Paul Graham", "Y Combinator", 4_911_298, "Founder", "https://pbs.twimg.com/profile_images/1824002576/pg-railsconf.jpg"),
+  seed("naval", "Naval", "Incompressible", 3_920_775, "Founder", "https://pbs.twimg.com/profile_images/1256841238298292232/ycqwaMI2.jpg"),
+  seed("lexfridman", "Lex Fridman", "Host of Lex Fridman Podcast", 5_398_720, "Creator", "https://pbs.twimg.com/profile_images/1854713863817646088/nTmsz7jR.jpg"),
+  seed("satyanadella", "Satya Nadella", "Chairman and CEO at Microsoft", 8_666_508, "Founder", "https://pbs.twimg.com/profile_images/1221837516816306177/_Ld4un5A.jpg"),
+  seed("OpenAI", "OpenAI", "AGI that benefits all of humanity", 5_120_837, "Platform", "https://pbs.twimg.com/profile_images/1885410181409820672/ztsaR0JW.jpg"),
+  seed("Tesla", "Tesla", "EVs, batteries, solar, AI & robotics", 24_778_413, "Platform", "https://pbs.twimg.com/profile_images/1337607516008501250/6Ggc4S5n.png"),
+  seed("SpaceX", "SpaceX", "Rockets and spacecraft", 41_906_284, "Platform", "https://pbs.twimg.com/profile_images/1697749409851985920/HbrI04tM.jpg"),
+  seed("AdamSchefter", "Adam Schefter", "ESPN Senior NFL Insider", 11_758_612, "Sports", "https://pbs.twimg.com/profile_images/793924061843914752/ycm8ibEE.jpg"),
+  seed("jasonfried", "Jason Fried", "37signals. Basecamp, HEY, ONCE", 4_503_638, "Founder", "https://pbs.twimg.com/profile_images/3413742921/0e9ef95e76c4a965b9b177fa2267d6c1.png"),
+  seed("ylecun", "Yann LeCun", "AMI Labs. NYU. Turing Award", 1_276_574, "Engineer", "https://pbs.twimg.com/profile_images/1483577865056702469/rWA-3_T7.jpg"),
+  seed("balajis", "Balaji", "The Network State", 2_107_255, "Founder", "https://pbs.twimg.com/profile_images/2049168417710915585/egYgw1FA.jpg"),
+  seed("AndrewYNg", "Andrew Ng", "Coursera. Stanford. Google Brain", 1_817_114, "Engineer", "https://pbs.twimg.com/profile_images/733174243714682880/oyG30NEH.jpg"),
+  seed("demishassabis", "Demis Hassabis", "Google DeepMind. Isomorphic Labs", 1_739_724, "Founder", "https://pbs.twimg.com/profile_images/1990472620614053888/xrAu0wQL.jpg"),
+  seed("Jason", "Jason", "All-In. This Week in Startups", 1_684_882, "Founder", "https://pbs.twimg.com/profile_images/1828870492633104384/o37xorx4.jpg"),
+  seed("tbpn", "TBPN", "Technology's daily show", 1_406_631, "Creator", "https://pbs.twimg.com/profile_images/2007964599774220288/jQbJ0IDt.jpg"),
+  seed("garrytan", "Garry Tan", "President & CEO Y Combinator", 1_065_106, "Founder", "https://pbs.twimg.com/profile_images/1922894268403941377/-dGWAt3N.jpg"),
+  seed("JensenHuang", "Jensen Huang", "Founder and CEO of NVIDIA", 1_024_121, "Founder", "https://pbs.twimg.com/profile_images/2080613261674962944/OMXX4RJ3.jpg"),
+  seed("levelsio", "levelsio", "Indie hacker. Shipping in public", 935_260, "Founder", "https://pbs.twimg.com/profile_images/2077111020305162240/PwddgOau.jpg"),
+  seed("ClementDelangue", "clem", "Co-founder & CEO Hugging Face", 616_289, "Founder", "https://pbs.twimg.com/profile_images/1100512198139498497/utHSJ4st.png"),
+  seed("cursor_ai", "Cursor", "Coding agent for ambitious software", 472_309, "Platform", "https://pbs.twimg.com/profile_images/1970182748146180096/dhZeXi_X.jpg"),
+  seed("YahooFantasy", "Yahoo Fantasy Sports", "Officially in fantasy draft season", 407_207, "Sports", "https://pbs.twimg.com/profile_images/1700177057911898112/plvoC7hA.jpg"),
+  seed("theo", "Theo", "CEO t3.chat. YouTuber", 376_340, "Creator", "https://pbs.twimg.com/profile_images/1909353910130950147/EeSGdgA5.jpg"),
+  seed("dwarkesh_sp", "Dwarkesh Patel", "Host of Dwarkesh Podcast", 253_329, "Writer", "https://pbs.twimg.com/profile_images/1925260306684813315/NjNQZmhZ.jpg"),
+  seed("nearcyan", "near", "Think about how you now spend your life", 251_275, "Analyst", "https://pbs.twimg.com/profile_images/2014854085254742016/eXb5-tF4.jpg"),
+  seed("visakanv", "Visakan Veerasamy", "Friendly ambitious nerd", 250_928, "Writer", "https://pbs.twimg.com/profile_images/1873013046534389766/s0bLkrmP.jpg"),
+  seed("LinusEkenstam", "Linus Ekenstam", "AI news, tools, and how to use them", 239_342, "Creator", "https://pbs.twimg.com/profile_images/2000865949298176002/0GW70YnP.jpg"),
+  seed("swyx", "swyx", "smol.ai. Cognition. Latent Space", 182_765, "Engineer", "https://pbs.twimg.com/profile_images/2073162797354217472/hNny55eF.jpg"),
+  seed("MattNavarra", "Matt Navarra", "Social media consultant and analyst", 180_205, "Analyst", "https://pbs.twimg.com/profile_images/1859611044416462848/l3Wg31a7.jpg"),
+  seed("cognition", "Cognition", "Makers of Devin", 174_894, "Platform", "https://pbs.twimg.com/profile_images/1765909640364068865/MvH-m0gd.jpg"),
+  seed("ibab", "Igor Babuschkin", "river.ai. Previously xAI", 111_323, "Engineer", "https://pbs.twimg.com/profile_images/2088772658565623808/9NTpf0oP.jpg"),
+  seed("schrep", "Mike Schroepfer", "Gigascale. Former CTO Meta", 99_734, "Engineer", "https://pbs.twimg.com/profile_images/1210715117005889542/qe4GSFW5.jpg"),
+  seed("jack", "jack", "no state is the best state", 11_572_986, "Founder", "https://pbs.twimg.com/profile_images/1661201415899951105/azNjKOSH.jpg"),
+  seed("espn", "ESPN", "Serving sports fans. Anytime. Anywhere.", 58_675_151, "Sports", "https://pbs.twimg.com/profile_images/1170690523201527808/FriNRiir.png"),
+  seed("NBA", "NBA", "The 2025-26 season", 47_016_770, "Sports", "https://pbs.twimg.com/profile_images/2066002547848921089/sjBHrkzT.jpg"),
+  seed("NFL", "NFL", "football is in the air", 36_838_284, "Sports", "https://pbs.twimg.com/profile_images/1619895559334273028/PHKS_mjX.jpg"),
+  seed("MrBeast", "MrBeast", "I want to make the world a better place", 34_952_745, "Creator", "https://pbs.twimg.com/profile_images/2008838029776158720/oDvxIJ1X.jpg"),
+  seed("StephenCurry30", "Stephen Curry", "Believer. Husband. Father.", 23_642_329, "Sports", "https://pbs.twimg.com/profile_images/1826710994590334977/shbgXcDB.jpg"),
+  seed("TheRock", "Dwayne Johnson", "founder of stuff", 16_018_061, "Creator", "https://pbs.twimg.com/profile_images/3478244961/01ebfc40ecc194a2abc81e82ab877af4.jpeg"),
+  seed("VitalikButerin", "vitalik.eth", "I choose balance.", 7_616_725, "Founder", "https://pbs.twimg.com/profile_images/2042521108067352576/3rv2_9m1.jpg"),
+  seed("barstoolsports", "Barstool Sports", "Viva La Stool", 6_965_188, "Sports", "https://pbs.twimg.com/profile_images/1222128514624892935/zC0ABl3m.jpg"),
+  seed("wojespn", "Adrian Wojnarowski", "GM @BonniesMBB", 6_541_201, "Sports", "https://pbs.twimg.com/profile_images/1861306702794031104/G_2Xvg01.jpg"),
+  seed("MKBHD", "Marques Brownlee", "Web video producer", 6_127_306, "Creator", "https://pbs.twimg.com/profile_images/1990855181785759745/CP3H7WsL.jpg"),
+  seed("RapSheet", "Ian Rapoport", "National Insider for ESPN and NFL Network", 5_140_785, "Sports", "https://pbs.twimg.com/profile_images/1032279765862965248/MaAIgBaS.jpg"),
+  seed("BillSimmons", "Bill Simmons", "The Ringer. The BS Podcast.", 5_116_722, "Sports", "https://pbs.twimg.com/profile_images/645990884165578753/moYctN8w.jpg"),
+  seed("PatMcAfeeShow", "Pat McAfee", "Host. Analyst. Show runner.", 3_389_382, "Sports", "https://pbs.twimg.com/profile_images/2081699348430061568/-yF5SJL9.jpg"),
+  seed("NateSilver538", "Nate Silver", "Silver Bulletin", 3_038_581, "Analyst", "https://pbs.twimg.com/profile_images/1771254203358355456/BZFn0E-J.jpg"),
+  seed("ezraklein", "Ezra Klein", "NYT Opinion. The Ezra Klein Show.", 2_594_832, "Writer", "https://pbs.twimg.com/profile_images/1874158397991378945/VzNck7yb.jpg"),
+  seed("chamath", "Chamath Palihapitiya", "Social Capital", 2_370_763, "Founder", "https://pbs.twimg.com/profile_images/1883600182165848064/-9LbG3md.jpg"),
+  seed("APompliano", "Anthony Pompliano", "Entrepreneur, investor, lifelong learner", 2_345_871, "Founder", "https://pbs.twimg.com/profile_images/1547787118243561478/PxWzJo1H.jpg"),
+  seed("github", "GitHub", "The AI-powered developer platform", 2_699_947, "Platform", "https://pbs.twimg.com/profile_images/2051404708766507008/ATxxTJXO.jpg"),
+  seed("neuralink", "Neuralink", "A high-bandwidth interface to the brain", 1_784_042, "Platform", "https://pbs.twimg.com/profile_images/1661856130535165953/zMoW6Sr1.jpg"),
+  seed("claudeai", "Claude", "AI assistant built by Anthropic", 1_733_272, "Platform", "https://pbs.twimg.com/profile_images/1950950107937185792/QOfEjFoJ.jpg"),
+  seed("Starlink", "Starlink", "Fast internet. Engineered by SpaceX", 1_725_477, "Platform", "https://pbs.twimg.com/profile_images/1720501511271383040/FXz_jiJu.jpg"),
+  seed("DavidSacks", "David Sacks", "Craft Ventures. All-In.", 1_695_153, "Founder", "https://pbs.twimg.com/profile_images/1879600809693917185/GkBxdTd9.jpg"),
+  seed("AnthropicAI", "Anthropic", "AI safety and research", 1_606_906, "Platform", "https://pbs.twimg.com/profile_images/1798110641414443008/XP8gyBaY.jpg"),
+  seed("minakimes", "Mina Kimes", "NFL at ESPN", 1_109_269, "Sports", "https://pbs.twimg.com/profile_images/1892329018760056835/Gol-Xuso.jpg"),
+  seed("gdb", "Greg Brockman", "President & Co-Founder OpenAI", 1_035_325, "Engineer", "https://pbs.twimg.com/profile_images/1347621377503711233/bHg3ipfD.jpg"),
+  seed("dhh", "DHH", "Ruby on Rails. 37signals.", 830_152, "Engineer", "https://pbs.twimg.com/profile_images/1746980162607140864/fG9Fj4K_.jpg"),
+  seed("lindayaX", "Linda Yaccarino", "Former CEO of X", 822_294, "Founder", "https://pbs.twimg.com/profile_images/2014074990279233536/5k1SyejA.jpg"),
+  seed("bhorowitz", "Ben Horowitz", "a16z", 758_609, "Founder", "https://pbs.twimg.com/profile_images/1438305416853614593/5t9Peejn.jpg"),
+  seed("rowancheung", "Rowan Cheung", "The Rundown AI", 596_443, "Writer", "https://pbs.twimg.com/profile_images/2074937954930163712/OhHIBRV7.jpg"),
+  seed("figma", "Figma", "Trying all the skills", 572_429, "Platform", "https://pbs.twimg.com/profile_images/2068849889753333760/YE3KJq__.jpg"),
+  seed("perplexity_ai", "Perplexity", "Curiosity changes everything", 500_499, "Platform", "https://pbs.twimg.com/profile_images/2009310641165660160/XArF3_Ib.jpg"),
+  seed("tobi", "tobi lutke", "Shopify CEO", 490_408, "Founder", "https://pbs.twimg.com/profile_images/1999293930936909824/_HWYanot.jpg"),
+  seed("amasad", "Amjad Masad", "CEO Replit", 484_375, "Founder", "https://pbs.twimg.com/profile_images/1897858917507776512/TRVTyKFk.jpg"),
+  seed("tszzl", "roon", "pacing the frontier", 464_961, "Writer", "https://pbs.twimg.com/profile_images/1918970926668054530/fy-ZsgJ7.jpg"),
+  seed("midjourney", "Midjourney", "New mediums of thought", 461_273, "Platform", "https://pbs.twimg.com/profile_images/1826028197256822784/pfgqU218.jpg"),
+  seed("vercel", "Vercel", "Agentic infrastructure", 449_794, "Platform", "https://pbs.twimg.com/profile_images/1767351110228918272/3Pndc5OT.png"),
+  seed("natfriedman", "Nat Friedman", "Builder", 446_439, "Founder", "https://pbs.twimg.com/profile_images/1677873294/image.jpg"),
+  seed("shaunmmaguire", "Shaun Maguire", "Partner at Sequoia", 381_402, "Founder", "https://pbs.twimg.com/profile_images/1942940317784719360/47aIqszK.jpg"),
+  seed("yacineMTB", "kache", "reinforcement learning, robots", 381_558, "Engineer", "https://pbs.twimg.com/profile_images/2065246279031009280/PwRJZkGP.jpg"),
+  seed("emollick", "Ethan Mollick", "Wharton. Studying AI.", 376_697, "Writer", "https://pbs.twimg.com/profile_images/1601382188712398850/3AAOlqrX.jpg"),
+  seed("OfficialLoganK", "Logan Kilpatrick", "Gemini. Google AI Studio.", 354_469, "Product", "https://pbs.twimg.com/profile_images/1943787288955084800/QOl7OJMc.jpg"),
+  seed("packyM", "Packy McCormick", "Not Boring", 229_300, "Writer", "https://pbs.twimg.com/profile_images/1674112444535324674/k6dYglK9.jpg"),
+  seed("goodside", "Riley Goodside", "Mostly screenshots of chatbots", 223_486, "Analyst", "https://pbs.twimg.com/profile_images/1027023337497800704/4rtouf4R.jpg"),
+  seed("esthercrawford", "Esther Crawford", "Product builder. Formerly Twitter, Meta.", 105_241, "Product", "https://pbs.twimg.com/profile_images/2049986951739269120/A3EpVuXw.jpg"),
+  seed("aidan_mclau", "Aidan McLaughlin", "Posttraining research at OpenAI", 48_717, "Engineer", "https://pbs.twimg.com/profile_images/2021802969738735617/ubpldNLZ.jpg"),
+];
+
+export const PLAYERS: Player[] = [...CORE, ...MORE];
+
 export function playerByHandle(handle: string) {
   return PLAYERS.find((p) => p.handle.toLowerCase() === handle.toLowerCase());
 }
@@ -197,12 +308,16 @@ export function playerByHandle(handle: string) {
 export const FEATURED_HANDLES = [
   "elonmusk",
   "grok",
+  "sama",
+  "StephenCurry30",
   "nikitabier",
-  "cb_doge",
-  "Engineering",
-  "AlexFinn",
+  "wojespn",
+  "levelsio",
+  "MrBeast",
+  "jack",
   "XOpenSource",
-  "aakashgupta",
+  "AdamSchefter",
+  "ibab",
 ];
 
 export const DESK_SEVEN = ["cb_doge", "nikitabier", "Engineering", "tetsuoai", "orbitant"];

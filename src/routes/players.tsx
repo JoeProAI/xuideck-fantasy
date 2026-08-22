@@ -1,13 +1,15 @@
+import { useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { AddPlayer } from "@/components/add-player";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { WaiverCard } from "@/components/waiver-card";
 import { WeekBar } from "@/components/week-bar";
+import { Input } from "@/components/ui/input";
 import { usePool } from "@/lib/pool";
-import { ROSTER_SIZE, tierOf } from "@/lib/scoring";
+import { ROSTER_SIZE } from "@/lib/scoring";
 import { useLeague } from "@/lib/store";
-import { formatNumber, formatPts } from "@/lib/utils";
+import type { Lane } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/players")({
   component: PlayersPage,
@@ -22,79 +24,123 @@ export const Route = createFileRoute("/players")({
   }),
 });
 
+const LANES: Array<"All" | Lane> = [
+  "All",
+  "Founder",
+  "Sports",
+  "Platform",
+  "Creator",
+  "Engineer",
+  "Writer",
+  "Product",
+  "Analyst",
+];
+
 function PlayersPage() {
   const { board, roster, taken } = usePool();
   const toggle = useLeague((s) => s.togglePlayer);
   const full = roster.length >= ROSTER_SIZE;
+  const [lane, setLane] = useState<(typeof LANES)[number]>("All");
+  const [q, setQ] = useState("");
+  const [sort, setSort] = useState<"pts" | "followers">("pts");
+
+  const shown = useMemo(() => {
+    const needle = q.replace(/^@/, "").trim().toLowerCase();
+    const list = board.filter((p) => {
+      if (lane !== "All" && p.lane !== lane) return false;
+      if (!needle) return true;
+      return (
+        p.handle.toLowerCase().includes(needle) ||
+        p.name.toLowerCase().includes(needle) ||
+        p.bio.toLowerCase().includes(needle)
+      );
+    });
+    if (sort === "followers") return [...list].sort((a, b) => b.followers - a.followers);
+    return list;
+  }, [board, lane, q, sort]);
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-6 sm:py-10">
+    <main className="mx-auto max-w-6xl px-4 py-6 sm:py-10">
       <WeekBar />
       <h1 className="mt-6 text-4xl">Waivers</h1>
       <p className="mt-2 max-w-xl text-muted">
-        Pull any public X account. In a league, each handle can only start for one team.
+        {board.length} public accounts in the pool. Filter, start five, or pull anyone else.
+        In a league, each handle starts for one team.
       </p>
       <div className="mt-6 max-w-2xl">
         <AddPlayer />
       </div>
-      <div className="mt-8 overflow-x-auto rounded-md border border-border bg-bg-elevated">
-        <table className="w-full min-w-[640px] text-left text-sm">
-          <thead className="border-b border-border font-mono text-[11px] uppercase tracking-wider text-subtle">
-            <tr>
-              <th className="px-4 py-3 font-medium">Player</th>
-              <th className="px-2 py-3 font-medium">Tier</th>
-              <th className="px-2 py-3 text-right font-medium">Pts</th>
-              <th className="px-4 py-3" />
-            </tr>
-          </thead>
-          <tbody>
-            {board.map((p) => {
-              const on = roster.includes(p.handle);
-              const claimed = taken.has(p.handle);
-              return (
-                <tr key={p.handle} className="border-b border-border last:border-0">
-                  <td className="px-4 py-3">
-                    <div className="flex items-center gap-3">
-                      <img
-                        src={p.pfp}
-                        alt=""
-                        referrerPolicy="no-referrer"
-                        className="size-10 rounded-full object-cover"
-                      />
-                      <span>
-                        <span className="block font-medium">{p.name}</span>
-                        <span className="font-mono text-xs text-muted">
-                          @{p.handle} · {formatNumber(p.followers)}
-                        </span>
-                      </span>
-                    </div>
-                  </td>
-                  <td className="px-2 py-3">
-                    <Badge>{claimed ? "taken" : tierOf(p.followers)}</Badge>
-                  </td>
-                  <td className="px-2 py-3 text-right">
-                    <span className="score-digits text-2xl text-accent">
-                      {formatPts(p.score.adj)}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-right">
-                    <Button
-                      size="sm"
-                      variant={on ? "subtle" : "default"}
-                      disabled={!on && (full || claimed)}
-                      onClick={() => {
-                        const err = toggle(p.handle);
-                        if (err) toast.error(err);
-                      }}
-                    >
-                      {on ? "Drop" : claimed ? "Taken" : full ? "Full" : "Add"}
-                    </Button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+
+      <div className="mt-6 flex flex-col gap-3">
+        <div className="flex gap-1 overflow-x-auto pb-1 [scrollbar-width:thin]">
+          {LANES.map((l) => (
+            <button
+              key={l}
+              type="button"
+              onClick={() => setLane(l)}
+              className={cn(
+                "h-11 shrink-0 rounded-sm px-3 font-mono text-[11px] uppercase tracking-wider",
+                lane === l ? "bg-accent text-accent-fg" : "bg-bg-elevated text-muted hover:text-fg",
+              )}
+            >
+              {l}
+            </button>
+          ))}
+        </div>
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <Input
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="Filter the board"
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
+            className="sm:max-w-sm"
+          />
+          <div className="flex rounded-sm border border-border bg-bg-elevated p-1">
+            {(
+              [
+                ["pts", "Week pts"],
+                ["followers", "Followers"],
+              ] as const
+            ).map(([key, label]) => (
+              <button
+                key={key}
+                type="button"
+                onClick={() => setSort(key)}
+                className={cn(
+                  "h-9 rounded-sm px-3 font-mono text-[11px] uppercase tracking-wider",
+                  sort === key ? "bg-accent text-accent-fg" : "text-muted hover:text-fg",
+                )}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.18em] text-subtle">
+        {shown.length} card{shown.length === 1 ? "" : "s"}
+      </p>
+      <div className="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {shown.map((p) => {
+          const on = roster.includes(p.handle);
+          const claimed = taken.has(p.handle);
+          return (
+            <WaiverCard
+              key={p.handle}
+              player={p}
+              onRoster={on}
+              claimed={claimed}
+              full={full}
+              onToggle={() => {
+                const err = toggle(p.handle);
+                if (err) toast.error(err);
+              }}
+            />
+          );
+        })}
       </div>
     </main>
   );

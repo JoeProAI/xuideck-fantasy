@@ -15,6 +15,8 @@ export function formatNumber(n: number, digits = 0) {
 
 export function formatPts(n: number) {
   if (!Number.isFinite(n)) return "0";
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 100_000) return `${Math.round(n / 1000)}k`;
   if (n >= 10_000) return `${(n / 1000).toFixed(1)}k`;
   return Math.round(n).toLocaleString();
 }
