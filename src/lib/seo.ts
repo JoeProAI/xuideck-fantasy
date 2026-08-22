@@ -4,7 +4,7 @@ export const APP_DESCRIPTION =
   "Weekly fantasy league for X. Pull any public handle, start five, and play friends every week. Likes are runs. 100k posts are home runs.";
 export const PRODUCTION_HOST = "fantasy.xuideck.com";
 /** Bump when the card pixels change so X recrawls. */
-export const OG_IMAGE_VERSION = "20260822f";
+export const OG_IMAGE_VERSION = "20260822g";
 
 export const LAUNCH_POST = `Draft any public account on X. Start five.
 
