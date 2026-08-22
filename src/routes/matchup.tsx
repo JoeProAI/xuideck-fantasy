@@ -57,6 +57,9 @@ function MatchupPage() {
             <Button asChild variant="outline">
               <Link to="/leagues">Start a league</Link>
             </Button>
+            <Button asChild variant="ghost">
+              <Link to="/instructions">How to play</Link>
+            </Button>
           </div>
         </section>
       ) : (

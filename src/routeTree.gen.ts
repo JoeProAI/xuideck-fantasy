@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BoardRouteImport } from './routes/board'
 import { Route as DraftRouteImport } from './routes/draft'
+import { Route as InstructionsRouteImport } from './routes/instructions'
 import { Route as LeagueRouteImport } from './routes/league'
 import { Route as LeaguesRouteImport } from './routes/leagues'
 import { Route as MatchupRouteImport } from './routes/matchup'
@@ -35,6 +36,11 @@ const BoardRoute = BoardRouteImport.update({
 const DraftRoute = DraftRouteImport.update({
   id: '/draft',
   path: '/draft',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InstructionsRoute = InstructionsRouteImport.update({
+  id: '/instructions',
+  path: '/instructions',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LeagueRoute = LeagueRouteImport.update({
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/board': typeof BoardRoute
   '/draft': typeof DraftRoute
+  '/instructions': typeof InstructionsRoute
   '/league': typeof LeagueRoute
   '/leagues': typeof LeaguesRouteWithChildren
   '/matchup': typeof MatchupRoute
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/board': typeof BoardRoute
   '/draft': typeof DraftRoute
+  '/instructions': typeof InstructionsRoute
   '/league': typeof LeagueRoute
   '/leagues': typeof LeaguesRouteWithChildren
   '/matchup': typeof MatchupRoute
@@ -116,6 +124,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/board': typeof BoardRoute
   '/draft': typeof DraftRoute
+  '/instructions': typeof InstructionsRoute
   '/league': typeof LeagueRoute
   '/leagues': typeof LeaguesRouteWithChildren
   '/matchup': typeof MatchupRoute
@@ -132,6 +141,7 @@ export interface FileRouteTypes {
     | '/'
     | '/board'
     | '/draft'
+    | '/instructions'
     | '/league'
     | '/leagues'
     | '/matchup'
@@ -146,6 +156,7 @@ export interface FileRouteTypes {
     | '/'
     | '/board'
     | '/draft'
+    | '/instructions'
     | '/league'
     | '/leagues'
     | '/matchup'
@@ -160,6 +171,7 @@ export interface FileRouteTypes {
     | '/'
     | '/board'
     | '/draft'
+    | '/instructions'
     | '/league'
     | '/leagues'
     | '/matchup'
@@ -175,6 +187,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BoardRoute: typeof BoardRoute
   DraftRoute: typeof DraftRoute
+  InstructionsRoute: typeof InstructionsRoute
   LeagueRoute: typeof LeagueRoute
   LeaguesRoute: typeof LeaguesRouteWithChildren
   MatchupRoute: typeof MatchupRoute
@@ -206,6 +219,13 @@ declare module '@tanstack/react-router' {
       path: '/draft'
       fullPath: '/draft'
       preLoaderRoute: typeof DraftRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/instructions': {
+      id: '/instructions'
+      path: '/instructions'
+      fullPath: '/instructions'
+      preLoaderRoute: typeof InstructionsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/league': {
@@ -289,6 +309,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BoardRoute: BoardRoute,
   DraftRoute: DraftRoute,
+  InstructionsRoute: InstructionsRoute,
   LeagueRoute: LeagueRoute,
   LeaguesRoute: LeaguesRouteWithChildren,
   MatchupRoute: MatchupRoute,

@@ -1,12 +1,12 @@
 export const APP_NAME = "Xuideck Fantasy";
 export const APP_TAGLINE = "Draft any X account. Win the week.";
 export const APP_DESCRIPTION =
-  "Yahoo-simple fantasy league for X. Pull any public handle, start five, and play friends every week. Likes are runs. 100k posts are home runs.";
+  "Weekly fantasy league for X. Pull any public handle, start five, and play friends every week. Likes are runs. 100k posts are home runs.";
 export const PRODUCTION_HOST = "fantasy.xuideck.com";
 /** Bump when the card pixels change so X recrawls. */
-export const OG_IMAGE_VERSION = "20260815";
+export const OG_IMAGE_VERSION = "20260822";
 
-export const LAUNCH_POST = `Yahoo fantasy, except the players are X accounts.
+export const LAUNCH_POST = `Draft any account on X.
 
 Likes are runs.
 A 100k post is a home run.

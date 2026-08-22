@@ -28,7 +28,7 @@ const STEPS = [
   },
   {
     title: "Lock five",
-    body: "Same size as a Yahoo lineup. Drop and add all week. One handle per team in a league.",
+    body: "Five starters. Drop and add all week. One handle per team in a league.",
   },
   {
     title: "Win the week",
@@ -44,7 +44,7 @@ function HomePage() {
   return (
     <main className="mx-auto max-w-5xl px-4 py-8 sm:py-14">
       <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
-        Yahoo fantasy. The players are X accounts.
+        Weekly fantasy. The players are X accounts.
       </p>
       <h1 className="mt-4 text-6xl sm:text-8xl">
         Draft any
@@ -60,6 +60,9 @@ function HomePage() {
         </Button>
         <Button asChild size="lg" variant="outline">
           <Link to="/leagues">Start a league</Link>
+        </Button>
+        <Button asChild size="lg" variant="ghost">
+          <Link to="/instructions">How to play</Link>
         </Button>
       </div>
 
@@ -123,6 +126,9 @@ function HomePage() {
           </Button>
           <Button asChild variant="outline">
             <Link to="/matchup">Open matchup</Link>
+          </Button>
+          <Button asChild variant="ghost">
+            <Link to="/instructions">Read the instructions</Link>
           </Button>
         </div>
       </section>

@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router";
+
 export function SiteFooter() {
   return (
     <footer className="mt-16 border-t border-border">
@@ -5,10 +7,20 @@ export function SiteFooter() {
         <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-subtle">
           Xuideck Fantasy
         </p>
-        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
-          Powered by{" "}
-          <span className="text-fg">Grok Build</span>
-        </p>
+        <nav className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
+          <Link to="/instructions" className="hover:text-fg">
+            How to play
+          </Link>
+          <Link to="/rules" className="hover:text-fg">
+            Scoring
+          </Link>
+          <Link to="/players" className="hover:text-fg">
+            Players
+          </Link>
+          <span>
+            Powered by <span className="text-fg">Grok Build</span>
+          </span>
+        </nav>
       </div>
     </footer>
   );

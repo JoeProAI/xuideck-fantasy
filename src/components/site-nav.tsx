@@ -46,13 +46,13 @@ export function SiteNav() {
               Standings
             </Link>
             <Link
-              to="/rules"
+              to="/instructions"
               className={cn(
                 "rounded-sm px-3 py-2 text-sm text-muted hover:text-fg",
-                pathname === "/rules" && "bg-bg-subtle text-fg",
+                (pathname === "/instructions" || pathname === "/rules") && "bg-bg-subtle text-fg",
               )}
             >
-              Scoring
+              How to play
             </Link>
           </nav>
         </div>

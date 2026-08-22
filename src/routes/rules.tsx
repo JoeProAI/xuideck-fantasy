@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/rules")({
   component: RulesPage,
@@ -17,7 +17,7 @@ function RulesPage() {
   return (
     <main className="mx-auto max-w-2xl px-4 py-6 sm:py-10">
       <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
-        How to play
+        Scoring table
       </p>
       <h1 className="mt-2 text-5xl">Stupid simple</h1>
       <ol className="mt-6 list-decimal space-y-3 pl-5 text-muted">
@@ -25,6 +25,13 @@ function RulesPage() {
         <li>Add any public X handle from Players.</li>
         <li>Highest handicapped score wins the week.</li>
       </ol>
+      <p className="mt-4 text-sm text-muted">
+        Want every screen explained?{" "}
+        <Link to="/instructions" className="text-accent underline-offset-2 hover:underline">
+          Read the full instructions
+        </Link>
+        .
+      </p>
       <h2 className="mt-10 text-3xl">Scoring</h2>
       <table className="mt-4 w-full text-sm">
         <tbody>

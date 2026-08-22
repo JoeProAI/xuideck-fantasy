@@ -239,7 +239,6 @@ const MORE: Player[] = [
   seed("levelsio", "levelsio", "Indie hacker. Shipping in public", 935_260, "Founder", "https://pbs.twimg.com/profile_images/2077111020305162240/PwddgOau.jpg"),
   seed("ClementDelangue", "clem", "Co-founder & CEO Hugging Face", 616_289, "Founder", "https://pbs.twimg.com/profile_images/1100512198139498497/utHSJ4st.png"),
   seed("cursor_ai", "Cursor", "Coding agent for ambitious software", 472_309, "Platform", "https://pbs.twimg.com/profile_images/1970182748146180096/dhZeXi_X.jpg"),
-  seed("YahooFantasy", "Yahoo Fantasy Sports", "Officially in fantasy draft season", 407_207, "Sports", "https://pbs.twimg.com/profile_images/1700177057911898112/plvoC7hA.jpg"),
   seed("theo", "Theo", "CEO t3.chat. YouTuber", 376_340, "Creator", "https://pbs.twimg.com/profile_images/1909353910130950147/EeSGdgA5.jpg"),
   seed("dwarkesh_sp", "Dwarkesh Patel", "Host of Dwarkesh Podcast", 253_329, "Writer", "https://pbs.twimg.com/profile_images/1925260306684813315/NjNQZmhZ.jpg"),
   seed("nearcyan", "near", "Think about how you now spend your life", 251_275, "Analyst", "https://pbs.twimg.com/profile_images/2014854085254742016/eXb5-tF4.jpg"),
