@@ -11,7 +11,7 @@ export const LAUNCH_POST = `Draft any public account on X. Start five.
 Likes are runs.
 A post over 100k impressions is a home run.
 
-This week @XOpenSource has 6k followers and ranks above @StephenCurry30, @MrBeast, and @espn.
+A 6k account is ranked above 20 million-follower accounts this week. That is the handicap.
 
 https://fantasy.xuideck.com`;
 
