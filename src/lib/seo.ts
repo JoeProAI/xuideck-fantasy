@@ -6,27 +6,26 @@ export const PRODUCTION_HOST = "fantasy.xuideck.com";
 /** Bump when the card pixels change so X recrawls. */
 export const OG_IMAGE_VERSION = "20260822";
 
-export const LAUNCH_POST = `Draft any account on X.
+export const LAUNCH_POST = `Draft any public account on X. Start five.
 
 Likes are runs.
-A 100k post is a home run.
-You start five.
+A post over 100k impressions is a home run.
 
-I drafted @elonmusk and I am already losing to @XOpenSource.
+This week @XOpenSource has 6k followers and ranks above @StephenCurry30, @MrBeast, and @espn.
 
 https://fantasy.xuideck.com`;
 
-export const LAUNCH_REPLY = `Scoring is baseball:
+export const LAUNCH_REPLY = `Scoring:
 
 R   likes
 H   impressions / 1k
-HR  posts over 100k
+HR  posts over 100k impressions
 RBI replies + quotes
 SB  bookmarks
 
-Log handicap so a 1k account can take a week off a whale.
+Then a log handicap so follower count does not auto-win.
 
-Draft five. Play your friends. Week 33 is live.`;
+Draft five. Play friends with a 6-letter code. Week 33 is live.`;
 
 export function publicHost() {
   return (import.meta.env.VITE_PUBLIC_HOSTNAME as string | undefined) || PRODUCTION_HOST;
